@@ -51,10 +51,10 @@ The complete list can be found in the [Criteria.md](./Criteria.md) file.
 
 ## :sparkles: Features
 
-:checkbox: **Trim video**\
-:checkbox: **View trimmed video**\
-:checkbox: **Download trimmed video**\
-:checkbox: **Save data on MongoDB**
+:white_medium_square: **Trim video**\
+:white_medium_square: **View trimmed video**\
+:white_medium_square: **Download trimmed video**\
+:white_medium_square: **Save data on MongoDB**
 
 ## :rocket: Technologies
 
