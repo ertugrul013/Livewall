@@ -32,4 +32,6 @@ routes.get("/", (req: Request, res: Response) => {
   });
 });
 
+routes.use("/upload", require("./upload"));
+
 export { routes };
