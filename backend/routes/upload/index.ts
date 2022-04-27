@@ -27,7 +27,7 @@ UploadRoutes.post(
       return res.status(200).json({
         message: "ok",
         duration: ms,
-        id: id,
+        id: id - 1,
       });
     });
   }
