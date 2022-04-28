@@ -2,7 +2,9 @@ const UploadRoutes = require("express").Router();
 import { Request, Response } from "express";
 import getVideoDurationInSeconds from "get-video-duration";
 import multer from "multer";
+
 let id = 0;
+
 const uploadStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./uploads/");
@@ -15,6 +17,7 @@ const uploadStorage = multer.diskStorage({
 const storageUpload = multer({
   storage: uploadStorage,
 });
+
 UploadRoutes.post(
   "/",
   storageUpload.single("file"),

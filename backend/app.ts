@@ -1,25 +1,16 @@
 const express = require("express");
+const dotenv = require("dotenv");
+dotenv.config();
 import { Request, Response, NextFunction } from "express";
 const bodyParser = require("body-parser");
 const routes = require("./routes").routes;
 const app = express();
 const port = 8080;
 var cors = require("cors");
-
+const connectDB = require("./services/db");
 app.use(cors()); // Use this after the variable declaration
-app.use(function (req: Request, res: Response, next: NextFunction) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type, Content-Range"
-  );
-  res.header("Access-Control-Expose-Headers", "X-Total-Count, Content-Range");
-  next();
-});
+
+connectDB();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

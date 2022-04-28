@@ -34,4 +34,5 @@ routes.get("/", (req: Request, res: Response) => {
 
 routes.use("/upload", require("./upload"));
 routes.use("/trim", require("./trim"));
+routes.use("/play", require("./play"));
 export { routes };
