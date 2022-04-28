@@ -5,7 +5,6 @@ import axios from "axios";
 import ReactPlayer from "react-player";
 import { UploadFile } from "@mui/icons-material";
 
-
 export default function VideoInput(props: any) {
     const [lengthVideo, setLengthVideo] = useState<number>();
     const [isFormatted, setIsFormatted] = useState<boolean>(false);
@@ -53,6 +52,23 @@ export default function VideoInput(props: any) {
         }).then(res => {
             setIsUploaded(true);
         });
+    }
+
+    const handleDownload = async (event: any) => {
+        event.preventDefault();
+        axios({
+            url: 'http://localhost:8080/download/' + id,
+            method: 'GET',
+            responseType: 'blob', // important
+        }).then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', id + ".mp4");
+            document.body.appendChild(link);
+            link.click();
+        });
+
     }
 
     return (
@@ -141,7 +157,17 @@ export default function VideoInput(props: any) {
                                         )}
                                     {isUploaded &&
                                         (
-                                            <Chip label="Uploaded" />
+                                            <>
+                                                <Button
+                                                    variant="contained"
+                                                    component="label"
+                                                    onClick={handleDownload} >
+                                                    <UploadFile sx={{
+                                                        paddingRight: "10px"
+                                                    }} /> Download
+                                                </Button>
+                                                <Chip label="Uploaded" />
+                                            </>
                                         )}
 
 
