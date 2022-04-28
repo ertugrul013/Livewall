@@ -1,5 +1,11 @@
 # byCape
 
+<div align="center" id="top"> 
+  <img src="./assets/byCape.png" alt="byCape" />
+
+&#xa0;
+
+</div>
 ## Back-end assessment
 
 #### Target
