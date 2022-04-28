@@ -7,16 +7,6 @@
 
 <h1 align="center">Livewall backend assesment</h1>
 
-<p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/ertugrul013/livewall?color=56BEB8">
-
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/ertugrul013/livewall?color=56BEB8">
-
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/ertugrul013/livewall?color=56BEB8">
-
-  <img alt="License" src="https://img.shields.io/github/license/ertugrul013/livewall?color=56BEB8">
-</p>
-
 <!-- Status -->
 
  <h4 align="center">
@@ -38,7 +28,7 @@
 ## :dart: About
 
 The criteria for this project is to create an application that can be used to trim video and view the trimmed video.
-The complete list can be found in the [Criteria.md](./Criteria.md) file.
+The complete list can be found in the [Criteria](./Criteria.md) file.
 
 ## :sparkles: Features
 
@@ -57,20 +47,80 @@ The following tools were used in this project:
 - [Express](https://expressjs.com/)
 - [MongoDB](https://www.mongodb.com/)
 - [Docker](https://www.docker.com/)
+- [FFmpeg](https://www.ffmpeg.org/)
 
 ## :white_check_mark: Requirements
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) [Node](https://nodejs.org/en/) and npm installed.
+Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) , [Node](https://nodejs.org/en/) and [Docker](https://docker.com) installed.
+
+### :heavy_exclamation_mark: Important
+
+FFMPEG is not included in the project. You need to install it manually. You can find the instructions on the website of [FFMPEG](https://ffmpeg.org/).
+
+If u decide to run the project on your local machine, using docker this will be installed for u on the docker file
 
 ## :checkered_flag: Starting
 
-needs to be added
+**Important**: Before starting, you need to have a .env file with the following variables:
+
+- MONGO_URI: Your MongoDB URI
+
+this file needs to be located in the backend folder.
+
+### :whale2: docker
+
+build and start the container
+
+```bash
+# Clone the project
+git clone https://github.com/ertugrul013/Livewall.git
+
+cd ./livewall
+
+# frontend
+cd ./frontend
+docker build -t livewallfrontend:dev .
+docker run -p 3000:3000 -d livewallfrontend:dev
+
+# backend
+cd ./backend
+docker build -t livewallbackend:dev .
+docker run -p 8080:8080 -d livewallbackend:dev
+```
+
+### :house_with_garden: local
+
+When running the project on your local machine, you need to install FFMPEG manually.
+
+Windows: <br/>
+This [wikihow link](https://www.wikihow.com/Install-FFmpeg-on-Windows) helped me setting it up on windows
+
+```bash
+# Install FFMPEG
+https://ffmpeg.org/download.html
+```
+
+Debain:
+
+```bash
+# Install FFMPEG
+sudo apt-get install ffmpeg
+```
+
+Mac:
+
+```bash
+# Install FFMPEG
+brew install ffmpeg
+```
+
+If there are any problems with the installation, please open an issue on the [Github repository](https://github.com/ertugrul013/Livewall/issues)
 
 ## :memo: License
 
-This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
+This project is under license from MIT. For more details, see the [LICENSE](LICENSE) file.
 
-Made with :heart: by <a href="https://github.com/ertugrul013" target="_blank">ertugrul yesil</a>
+Made with :heart: by <a href="https://github.com/ertugrul013" target="_blank">Eddie yesil</a>
 
 &#xa0;
 
