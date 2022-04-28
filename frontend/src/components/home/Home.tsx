@@ -2,13 +2,16 @@ import { Grid, Paper, Button, TextField } from "@mui/material";
 import VideoLabelIcon from '@mui/icons-material/VideoLabel';
 import { useState, useRef } from "react";
 import axios from "axios";
+import ReactPlayer from "react-player";
+import { UploadFile } from "@mui/icons-material";
 
 
 export default function VideoInput(props: any) {
-    const { width, height } = props;
     const [lengthVideo, setLengthVideo] = useState<number>();
     const inputRef = useRef();
+    const [isFormatted, setIsFormatted] = useState<boolean>(false);
     const [source, setSource] = useState<string>();
+    const [id, setId] = useState<string>();
 
     const handleFileChange = async (event: any) => {
         const file = event.target.files[0];
@@ -22,13 +25,23 @@ export default function VideoInput(props: any) {
             const dur = parseInt(res.data.duration)
             setLengthVideo(dur);
             setSource(url);
-
+            setId(res.data.id);
         });
     };
 
     const trimVideo = async (event: any) => {
         event.preventDefault()
-        console.log(lengthVideo)
+        const min: number = event.target[0].value;
+        const max: number = event.target[1].value;
+        await axios.post("http://localhost:8080/trim", {
+            min: min,
+            max: max,
+            id: id,
+        }).then(res => {
+            setIsFormatted(true);
+            setSource("http://localhost:8080/play/" + res.data.id);
+        });
+
     }
 
     const handleChoose = (event: any) => {
@@ -36,6 +49,10 @@ export default function VideoInput(props: any) {
         inputRef.current.click();
 
     };
+
+    const handleUpload = (event: any) => {
+        event.preventDefault();
+    }
 
     return (
         <>
@@ -72,13 +89,13 @@ export default function VideoInput(props: any) {
                         }
                         {source && (
                             <Paper >
-                                <video
-                                    className="VideoInput_video"
-                                    width={width}
-                                    height={height}
+                                <ReactPlayer
+                                    url={source}
                                     controls
-                                    src={source}
+                                    muted
+                                    autplay
                                 />
+
                                 <Grid
                                     sx={{
                                         marginTop: "10px"
@@ -87,26 +104,45 @@ export default function VideoInput(props: any) {
                                     spacing={1}
                                     direction={"row"}
                                 >
-                                    <form onSubmit={trimVideo}>
-                                        <input
-                                            name={"min"}
-                                            min={0}
-                                            type={"number"}
-                                        />
-                                        <input
-                                            name={"max"}
-                                            min={0}
-                                            max={lengthVideo}
-                                            type="number"
-                                        />
-                                        <input
-                                            type="submit"
-                                            value="submit"
-                                        />
+                                    {!isFormatted &&
+                                        (
+                                            <form onSubmit={trimVideo}>
+                                                <input
+                                                    name={"min"}
+                                                    min={0}
+                                                    type={"number"}
+                                                />
+                                                <input
+                                                    name={"max"}
+                                                    min={0}
+                                                    max={lengthVideo}
+                                                    type="number"
+                                                />
+                                                <input
+                                                    type="submit"
+                                                    value="submit"
+                                                />
 
 
-                                    </form>
+                                            </form>
+                                        )}
+                                    {isFormatted &&
+                                        (
+
+                                            <Button
+                                                variant="contained"
+                                                component="label"
+                                                onClick={handleUpload} >
+                                                <UploadFile sx={{
+                                                    paddingRight: "10px"
+                                                }} /> Confirm
+                                            </Button>
+
+                                        )}
+
                                 </Grid>
+
+
                             </Paper>
                         )}
                     </Paper>
