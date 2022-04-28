@@ -1,4 +1,4 @@
-import { Grid, Paper, Button } from "@mui/material";
+import { Grid, Paper, Button, Chip } from "@mui/material";
 import VideoLabelIcon from '@mui/icons-material/VideoLabel';
 import { useState } from "react";
 import axios from "axios";
@@ -92,8 +92,7 @@ export default function VideoInput(props: any) {
                                 <ReactPlayer
                                     url={source}
                                     controls
-                                    muted
-                                    autplay
+
                                 />
 
                                 <Grid
@@ -142,7 +141,7 @@ export default function VideoInput(props: any) {
                                         )}
                                     {isUploaded &&
                                         (
-                                            <p> Uploaded </p>
+                                            <Chip label="Uploaded" />
                                         )}
 
 
