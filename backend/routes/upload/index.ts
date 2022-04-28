@@ -1,6 +1,8 @@
 const UploadRoutes = require("express").Router();
 import { Request, Response } from "express";
 import getVideoDurationInSeconds from "get-video-duration";
+import { createModel } from "mongoose-gridfs";
+import { createReadStream } from "fs";
 import multer from "multer";
 
 let id = 0;
@@ -36,4 +38,26 @@ UploadRoutes.post(
   }
 );
 
+UploadRoutes.post("/database", (req: Request, res: Response) => {
+  const { id } = req.body;
+  const trimmedFile = "./uploads/trimmed/" + id + ".mp4";
+  const readStream = createReadStream(trimmedFile);
+  const options = {
+    filename: id.toString() + ".mp4",
+    content_type: "video/mp4",
+  };
+  const Trimmed = createModel();
+  Trimmed.write(options, readStream, (err, file) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        message: "error",
+      });
+    }
+    console.log("file uploaded");
+    return res.status(200).json({
+      message: "ok",
+    });
+  });
+});
 module.exports = UploadRoutes;

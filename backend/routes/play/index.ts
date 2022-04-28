@@ -1,4 +1,3 @@
-const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const PlayRoutes = require("express").Router();
 import { Request, Response } from "express";
 import path from "path";

@@ -1,45 +1,9 @@
 const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
 const TrimRoutes = require("express").Router();
-import axios from "axios";
 import { Request, Response } from "express";
 import path from "path";
 const ffmpeg = require("fluent-ffmpeg");
-import crypto from "crypto";
 ffmpeg.setFfmpegPath(ffmpegPath);
-import multer from "multer";
-import { GridFsStorage } from "multer-gridfs-storage";
-import { createReadStream, statSync } from "fs";
-
-// const uploadStorage = new GridFsStorage({
-//   url: process.env.MONGO_URI,
-//   file: (req, file) => {
-//     return new Promise((resolve, reject) => {
-//       crypto.randomBytes(16, (err, buf) => {
-//         if (err) {
-//           return reject(err);
-//         }
-//         const filename = buf.toString("hex") + path.extname(file.originalname);
-//         const fileInfo = {
-//           filename: filename,
-//           bucketName: "video",
-//         };
-//         resolve(fileInfo);
-//       });
-//     });
-//   },
-// });
-
-// const fileFilter = (req, file, cb) => {
-//   if (file.mimetype === "video/mp4") {
-//     cb(null, true);
-//   } else {
-//     cb(null, false);
-//   }
-// };
-
-// const storageUpload = multer({
-//   storage: uploadStorage,
-// });
 
 TrimRoutes.post("/", (req: Request, res: Response) => {
   const { min, max, id } = req.body;

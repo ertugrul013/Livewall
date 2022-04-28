@@ -1,6 +1,6 @@
-import { Grid, Paper, Button, TextField } from "@mui/material";
+import { Grid, Paper, Button } from "@mui/material";
 import VideoLabelIcon from '@mui/icons-material/VideoLabel';
-import { useState, useRef } from "react";
+import { useState } from "react";
 import axios from "axios";
 import ReactPlayer from "react-player";
 import { UploadFile } from "@mui/icons-material";
@@ -8,9 +8,9 @@ import { UploadFile } from "@mui/icons-material";
 
 export default function VideoInput(props: any) {
     const [lengthVideo, setLengthVideo] = useState<number>();
-    const inputRef = useRef();
     const [isFormatted, setIsFormatted] = useState<boolean>(false);
     const [source, setSource] = useState<string>();
+    const [isUploaded, setIsUploaded] = useState<boolean>(false);
     const [id, setId] = useState<string>();
 
     const handleFileChange = async (event: any) => {
@@ -44,14 +44,15 @@ export default function VideoInput(props: any) {
 
     }
 
-    const handleChoose = (event: any) => {
-        // @ts-ignore: Object is possibly 'undefined'
-        inputRef.current.click();
 
-    };
 
-    const handleUpload = (event: any) => {
+    const handleUpload = async (event: any) => {
         event.preventDefault();
+        await axios.post("http://localhost:8080/upload/database", {
+            id: id,
+        }).then(res => {
+            setIsUploaded(true);
+        });
     }
 
     return (
@@ -71,7 +72,6 @@ export default function VideoInput(props: any) {
                             <Button
                                 variant="contained"
                                 component="label"
-                                onClick={handleChoose}
                             >
                                 <VideoLabelIcon sx={{
                                     paddingRight: "10px"
@@ -138,7 +138,13 @@ export default function VideoInput(props: any) {
                                                 }} /> Confirm
                                             </Button>
 
+
                                         )}
+                                    {isUploaded &&
+                                        (
+                                            <p> Uploaded </p>
+                                        )}
+
 
                                 </Grid>
 
