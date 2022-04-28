@@ -18,6 +18,13 @@ const uploadStorage = multer.diskStorage({
 
 const storageUpload = multer({
   storage: uploadStorage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === "video/mp4") {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  },
 });
 
 UploadRoutes.post(

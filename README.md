@@ -36,6 +36,7 @@ The complete list can be found in the [Criteria](./Criteria.md) file.
 :ballot_box_with_check: **View trimmed video**\
 :ballot_box_with_check: **Download trimmed video**\
 :ballot_box_with_check: **Save data on MongoDB**
+:white_medium_square: **Unit tests**
 
 ## :rocket: Technologies
 
